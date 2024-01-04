@@ -62,13 +62,13 @@ class TipoVinculo(Model):
 
 class Funcionario(Model):
     """Model que contém as informações do funcionário"""
-    nome = models.CharField(max_length=255)
+    nome = models.CharField(max_length=255, unique=True)
     
-    sexo = models.ForeignKey(Sexo, on_delete=models.PROTECT, null=False)
+    sexo = models.ForeignKey(Sexo, on_delete=models.PROTECT, null=False, blank=False)
     
-    cpf = models.IntegerField()
-    cns = models.IntegerField()
-    rg = models.IntegerField()
+    cpf = models.CharField(unique=True, max_length=11)
+    cns = models.IntegerField(unique=True)
+    rg = models.IntegerField(unique=True)
     emissao_rg = models.DateField()
     email = models.EmailField()
     nome_mae = models.CharField(max_length=255)

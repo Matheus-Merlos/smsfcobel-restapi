@@ -5,4 +5,6 @@ from vinculos.api import *
 
 urlpatterns = [
     path('', VinculosAPIList.as_view()),
+    path('funcionarios/', FuncionarioAPIList.as_view()),
+    path('funcionarios/<int:pk>', FuncionarioAPI.as_view())
 ]
