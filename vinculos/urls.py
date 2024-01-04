@@ -4,5 +4,5 @@ from django.http import HttpResponse
 from vinculos.api import *
 
 urlpatterns = [
-    path('', vinculos_api_view),
+    path('', VinculosAPIList.as_view()),
 ]

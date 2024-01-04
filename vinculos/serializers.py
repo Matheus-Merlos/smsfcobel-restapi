@@ -14,9 +14,13 @@ class VinculoSerializer(serializers.ModelSerializer):
     cns = serializers.SerializerMethodField()
     funcao = serializers.StringRelatedField(source='funcao.descricao')
     
+    data_criacao = serializers.DateField(format='%d/%m/%Y')
+    data_entrada = serializers.DateField(format='%d/%m/%Y')
+    tipo = serializers.DateField(format='%d/%m/%Y', source='tipo.descricao')
+    
     class Meta:
         model = Vinculo
-        fields = ['tipo_vinculo', 'nome', 'cpf', 'rg', 'emissao_rg', 'local', 'email', 'nome_mae', 'nome_pai', 'cns', 'funcao']
+        fields = ['tipo_vinculo', 'nome', 'cpf', 'rg', 'emissao_rg', 'local', 'email', 'nome_mae', 'nome_pai', 'cns', 'funcao', 'data_criacao', 'data_entrada', 'tipo']
         
     def get_cpf(self, obj: Vinculo) -> str:
         cpf = str(obj.funcionario.cpf)
@@ -32,3 +36,4 @@ class VinculoSerializer(serializers.ModelSerializer):
         cns = str(obj.funcionario.cns)
         cns = f'{cns[:4]}.{cns[4:8]}.{cns[8:12]}.{cns[12:]}'
         return cns
+    
