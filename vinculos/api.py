@@ -24,6 +24,8 @@ class FuncionarioAPIList(APIView):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
+
 class FuncionarioAPI(APIView):
     def get(self, request: Request, pk: int) -> Response:
         funcionario = get_object_or_404(Funcionario.objects.all(), pk=pk)
