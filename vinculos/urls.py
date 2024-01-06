@@ -4,7 +4,16 @@ from django.http import HttpResponse
 from vinculos.api import *
 
 urlpatterns = [
-    path('', VinculosAPIList.as_view()),
-    path('funcionarios/', FuncionarioAPIList.as_view()),
-    path('funcionarios/<int:pk>', FuncionarioAPI.as_view())
+    path('', VinculosViewSet.as_view({
+        'get': 'list'
+        })),
+    path('funcionarios/', FuncionarioViewSet.as_view({
+        'get': 'list',
+        'post': 'create'
+        })),
+    path('funcionarios/<int:pk>', FuncionarioViewSet.as_view({
+        'get': 'retrieve',
+        'patch': 'partial_update',
+        'delete': 'destroy'
+    }))
 ]
