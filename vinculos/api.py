@@ -14,11 +14,3 @@ class VinculosViewSet(ModelViewSet):
 class FuncionarioViewSet(ModelViewSet):
     queryset = Funcionario.objects.all()
     serializer_class = FuncionarioSerializer
-
-
-class FuncionarioAPI(APIView):
-    def get(self, request: Request, pk: int) -> Response:
-        funcionario = get_object_or_404(Funcionario.objects.all(), pk=pk)
-        serializer = FuncionarioSerializer(instance=funcionario, many=False)
-        return Response(status=status.HTTP_200_OK, data=serializer.data)
-    

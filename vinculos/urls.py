@@ -1,19 +1,13 @@
-from django.contrib import admin
+from rest_framework.routers import SimpleRouter
 from django.urls import path, include
-from django.http import HttpResponse
-from vinculos.api import *
+from vinculos import api
+
+app_name = 'vinculos'
+
+vinculos_router = SimpleRouter(trailing_slash=True)
+vinculos_router.register('funcionarios', api.FuncionarioViewSet, basename='funcionarios')
+vinculos_router.register('', api.VinculosViewSet)
 
 urlpatterns = [
-    path('', VinculosViewSet.as_view({
-        'get': 'list'
-        })),
-    path('funcionarios/', FuncionarioViewSet.as_view({
-        'get': 'list',
-        'post': 'create'
-        })),
-    path('funcionarios/<int:pk>', FuncionarioViewSet.as_view({
-        'get': 'retrieve',
-        'patch': 'partial_update',
-        'delete': 'destroy'
-    }))
+    path('', include(vinculos_router.urls))
 ]
