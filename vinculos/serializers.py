@@ -2,6 +2,26 @@ from rest_framework import serializers
 from vinculos.validators import *
 from vinculos.models import *
 
+class LocalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Local
+        fields = ['id', 'descricao']
+        
+class FuncaoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Funcao
+        fields = ['id', 'descricao']
+
+class TipoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tipo
+        fields = ['id', 'descricao']
+        
+class TipoVinculoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TipoVinculo
+        fields = ['id', 'descricao']
+
 class FuncionarioSerializer(serializers.ModelSerializer):
     emissao_rg = serializers.DateField(format='%d/%m/%Y')
     data_nascimento = serializers.DateField(format='%d/%m/%Y')
@@ -12,11 +32,34 @@ class FuncionarioSerializer(serializers.ModelSerializer):
         fields = ['nome', 'sexo_codigo', 'sexo', 'cpf', 'rg', 'emissao_rg', 'cns', 'email', 'nome_mae', 'nome_pai', 'data_nascimento', 'operador', 'profissional']
         
     def validate(self, attrs):
-        super_validate = super().validate(attrs)
-        FuncionarioValidator(data=attrs)
-        return super_validate
+        return super().validate(attrs)
 
 class VinculoSerializer(serializers.ModelSerializer):
+    
+    data_entrada = serializers.DateField(format='%d/%m/%Y')
+    data_saida = serializers.DateField(format='%d/%m/%Y')
+    
+    funcionario_codigo = serializers.PrimaryKeyRelatedField(queryset=Funcionario.objects.all(), source='funcionario', write_only=True, required=True)
+    funcionario = serializers.StringRelatedField(source='funcionario.nome', read_only=True)
+    
+    funcao_codigo = serializers.PrimaryKeyRelatedField(queryset=Funcao.objects.all(), source='funcao', write_only=True, required=True)
+    funcao = serializers.StringRelatedField(source='funcao.descricao', read_only=True)
+
+    local_codigo = serializers.PrimaryKeyRelatedField(queryset=Local.objects.all(), source='local', write_only=True, required=True)
+    local = serializers.StringRelatedField(source='local.descricao', read_only=True)
+    
+    tipo_codigo = serializers.PrimaryKeyRelatedField(queryset=Tipo.objects.all(), source='tipo', write_only=True, required=True)
+    tipo = serializers.StringRelatedField(source='tipo.descricao', read_only=True)
+    
+    tipo_vinculo_codigo = serializers.PrimaryKeyRelatedField(queryset=TipoVinculo.objects.all(), source='tipo_vinculo', write_only=True, required=True)
+    tipo_vinculo = serializers.StringRelatedField(source='tipo_vinculo.descricao', read_only=True)
+    
+    class Meta:
+        model = Vinculo
+        fields = ['funcionario_codigo', 'funcionario', 'carga_horaria', 'data_entrada', 'data_saida', 'funcao_codigo', 'funcao', 'local_codigo', 'local', 'tipo_codigo', 'tipo', 'tipo_vinculo_codigo', 'tipo_vinculo']
+    
+
+class VinculosPendentesSerializer(serializers.ModelSerializer):
     tipo_vinculo = serializers.StringRelatedField(source='tipo_vinculo.descricao')
     nome = serializers.StringRelatedField(source='funcionario.nome')
     cpf = serializers.StringRelatedField(source='funcionario.cpf')
