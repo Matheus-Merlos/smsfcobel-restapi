@@ -27,6 +27,11 @@ class TiposVinculoList(ReadOnlyModelViewSet):
     serializer_class = TipoVinculoSerializer
 
 
+class SexoList(ReadOnlyModelViewSet):
+    queryset = Sexo.objects.all()
+    serializer_class = SexoSerializer
+
+
 class VinculosPendentesViewSet(ReadOnlyModelViewSet):
     queryset = Vinculo.objects.all().filter(status_ids_id=1)
     serializer_class = VinculosPendentesSerializer

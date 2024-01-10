@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from vinculos.validators import *
+from vinculos import validators
 from vinculos.models import *
 
 class LocalSerializer(serializers.ModelSerializer):
@@ -21,6 +21,11 @@ class TipoVinculoSerializer(serializers.ModelSerializer):
     class Meta:
         model = TipoVinculo
         fields = ['id', 'descricao']
+        
+class SexoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sexo
+        fields = ['id', 'descricao']
 
 class FuncionarioSerializer(serializers.ModelSerializer):
     emissao_rg = serializers.DateField(format='%d/%m/%Y')
@@ -32,7 +37,9 @@ class FuncionarioSerializer(serializers.ModelSerializer):
         fields = ['nome', 'sexo_codigo', 'sexo', 'cpf', 'rg', 'emissao_rg', 'cns', 'email', 'nome_mae', 'nome_pai', 'data_nascimento', 'operador', 'profissional']
         
     def validate(self, attrs):
+        validators.FuncionarioValidator(attrs)
         return super().validate(attrs)
+        
 
 class VinculoSerializer(serializers.ModelSerializer):
     
@@ -57,6 +64,10 @@ class VinculoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vinculo
         fields = ['funcionario_codigo', 'funcionario', 'carga_horaria', 'data_entrada', 'data_saida', 'funcao_codigo', 'funcao', 'local_codigo', 'local', 'tipo_codigo', 'tipo', 'tipo_vinculo_codigo', 'tipo_vinculo']
+    
+    def validate(self, attrs):
+        validators.VinculoValidator(attrs)
+        return super().validate(attrs)
     
 
 class VinculosPendentesSerializer(serializers.ModelSerializer):
@@ -83,4 +94,3 @@ class VinculosPendentesSerializer(serializers.ModelSerializer):
         model = Vinculo
         fields = ['tipo_vinculo', 'nome', 'cpf', 'rg', 'emissao_rg', 'local', 'email', 'nome_mae', 'nome_pai', 'cns', 'funcao', 'operador', 'profissional', 'data_criacao', 'data_entrada', 'tipo']
 
-    

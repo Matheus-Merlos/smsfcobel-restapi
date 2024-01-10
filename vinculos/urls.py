@@ -12,6 +12,7 @@ vinculos_router.register('locais-trabalho', api.LocaisTrabalhoList)
 vinculos_router.register('funcoes', api.FuncoesList)
 vinculos_router.register('tipos', api.TiposList)
 vinculos_router.register('tipos-vinculo', api.TiposVinculoList)
+vinculos_router.register('sexos', api.SexoList)
 
 vinculos_router.register('', api.VinculosViewSet)
 
