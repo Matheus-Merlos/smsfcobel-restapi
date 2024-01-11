@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet, mixins
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -40,10 +41,12 @@ class VinculosPendentesViewSet(ReadOnlyModelViewSet):
 class VinculosViewSet(ModelViewSet):
     queryset = Vinculo.objects.all()
     serializer_class = VinculoSerializer
+    permission_classes = [IsAuthenticated,]
 
 
 class FuncionarioViewSet(ModelViewSet):
     queryset = Funcionario.objects.all()
     serializer_class = FuncionarioSerializer
     http_method_names = ['get', 'post', 'patch','options', 'head', 'trace']
+    permission_classes = [IsAuthenticated,]
     

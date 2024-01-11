@@ -25,16 +25,6 @@ class FuncionarioValidator(Validator):
         
         self.validate_rg()
         
-        data_nascimento = self.data.get('data_nascimento')
-        data_emissao_rg = self.data.get('emissao_rg')
-        
-        assert isinstance(data_nascimento, date)
-        assert isinstance(data_emissao_rg, date)
-        
-        if data_emissao_rg > data_nascimento:
-            self.errors['data_nascimento'] = 'The ID issuance date is greater than the date of birth'
-            self.errors['emissao_rg'] = 'The ID issuance date is greater than the date of birth'
-        
         super().validate(data)
     
     def validate_name(self, name_field_name: str) -> None:
