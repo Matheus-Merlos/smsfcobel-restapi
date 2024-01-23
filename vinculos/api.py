@@ -31,6 +31,7 @@ class TiposVinculoList(ReadOnlyModelViewSet):
 class SexoList(ReadOnlyModelViewSet):
     queryset = Sexo.objects.all()
     serializer_class = SexoSerializer
+    permission_classes = [IsAuthenticated,]
 
 
 class VinculosPendentesViewSet(ReadOnlyModelViewSet):

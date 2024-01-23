@@ -34,7 +34,7 @@ class FuncionarioSerializer(serializers.ModelSerializer):
     sexo = serializers.StringRelatedField(source='sexo.descricao', read_only=True)
     class Meta:
         model = Funcionario
-        fields = ['nome', 'sexo_codigo', 'sexo', 'cpf', 'rg', 'emissao_rg', 'cns', 'email', 'nome_mae', 'nome_pai', 'data_nascimento', 'operador', 'profissional']
+        fields = ['id' ,'nome', 'sexo_codigo', 'sexo', 'cpf', 'rg', 'emissao_rg', 'cns', 'email', 'nome_mae', 'nome_pai', 'data_nascimento', 'operador', 'profissional']
         
     def validate(self, attrs):
         validators.FuncionarioValidator(attrs)
