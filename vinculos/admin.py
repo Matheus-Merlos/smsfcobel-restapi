@@ -62,7 +62,7 @@ class FuncionarioAdmin(admin.ModelAdmin):
 @admin.register(models.Vinculo)
 class VinculoAdmin(admin.ModelAdmin):
     ordering = ('id',)
-    list_display = ('id', 'funcionario_nome', 'carga_horaria', 'data_entrada', 'data_saida', 'data_criacao', 'data_edicao')
+    list_display = ('id', 'funcionario_nome', 'carga_horaria', 'data_entrada', 'data_saida', 'data_criacao', 'data_edicao', 'status_ids_id')
     list_editable = ('carga_horaria', 'data_entrada', 'data_saida')
     
     def funcionario_nome(self, obj):

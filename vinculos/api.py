@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet, mixins
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.request import Request
@@ -50,4 +50,3 @@ class FuncionarioViewSet(ModelViewSet):
     serializer_class = FuncionarioSerializer
     http_method_names = ['get', 'post', 'patch','options', 'head', 'trace']
     permission_classes = [IsAuthenticated,]
-    

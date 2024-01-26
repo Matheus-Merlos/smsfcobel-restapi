@@ -37,7 +37,7 @@ class FuncionarioSerializer(serializers.ModelSerializer):
         fields = ['id' ,'nome', 'sexo_codigo', 'sexo', 'cpf', 'rg', 'emissao_rg', 'cns', 'email', 'nome_mae', 'nome_pai', 'data_nascimento', 'operador', 'profissional']
         
     def validate(self, attrs):
-        validators.FuncionarioValidator(attrs)
+        #validators.FuncionarioValidator(attrs)
         return super().validate(attrs)
         
 
@@ -61,16 +61,20 @@ class VinculoSerializer(serializers.ModelSerializer):
     tipo_vinculo_codigo = serializers.PrimaryKeyRelatedField(queryset=TipoVinculo.objects.all(), source='tipo_vinculo', write_only=True, required=True)
     tipo_vinculo = serializers.StringRelatedField(source='tipo_vinculo.descricao', read_only=True)
     
+    status_ids_id = serializers.PrimaryKeyRelatedField(queryset=Status.objects.all(), write_only=True)
+
+    
     class Meta:
         model = Vinculo
-        fields = ['funcionario_codigo', 'funcionario', 'carga_horaria', 'data_entrada', 'data_saida', 'funcao_codigo', 'funcao', 'local_codigo', 'local', 'tipo_codigo', 'tipo', 'tipo_vinculo_codigo', 'tipo_vinculo']
+        fields = ['id', 'funcionario_codigo', 'funcionario', 'carga_horaria', 'data_entrada', 'data_saida', 'funcao_codigo', 'funcao', 'local_codigo', 'local', 'tipo_codigo', 'tipo', 'tipo_vinculo_codigo', 'tipo_vinculo', 'status_ids_id']
     
     def validate(self, attrs):
-        validators.VinculoValidator(attrs)
+        #validators.VinculoValidator(attrs)
         return super().validate(attrs)
     
 
 class VinculosPendentesSerializer(serializers.ModelSerializer):
+    profissional_id = serializers.StringRelatedField(source='funcionario.id')
     tipo_vinculo = serializers.StringRelatedField(source='tipo_vinculo.descricao')
     nome = serializers.StringRelatedField(source='funcionario.nome')
     cpf = serializers.StringRelatedField(source='funcionario.cpf')
@@ -92,5 +96,5 @@ class VinculosPendentesSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Vinculo
-        fields = ['tipo_vinculo', 'nome', 'cpf', 'rg', 'emissao_rg', 'local', 'email', 'nome_mae', 'nome_pai', 'cns', 'funcao', 'operador', 'profissional', 'data_criacao', 'data_entrada', 'tipo']
+        fields = ['id', 'profissional_id', 'tipo_vinculo', 'nome', 'cpf', 'rg', 'emissao_rg', 'local', 'email', 'nome_mae', 'nome_pai', 'cns', 'funcao', 'operador', 'profissional', 'data_criacao', 'data_entrada', 'tipo']
 
