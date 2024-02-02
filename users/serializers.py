@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from users.models import CustomUser
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,4 +16,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
-        
+    
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    # Adicione campos adicionais que você deseja incluir no retorno do token
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data['user'] = self.user.name
+        data['cpf'] = self.user.cpf
+        return data    

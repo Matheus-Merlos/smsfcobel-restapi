@@ -138,6 +138,8 @@ REST_FRAMEWORK = {
     ),
 }
 
+AUTH_USER_MODEL = 'users.CustomUser'
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
@@ -147,8 +149,6 @@ SIMPLE_JWT = {
     "SIGNING_KEY": SECRET_KEY,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
-
-AUTH_USER_MODEL = 'users.CustomUser'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",

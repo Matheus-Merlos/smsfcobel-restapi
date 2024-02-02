@@ -71,6 +71,7 @@ class Funcionario(Model):
     rg = models.IntegerField(unique=True)
     emissao_rg = models.DateField()
     email = models.EmailField()
+    crm = models.CharField(max_length=31, blank=True, null=True)
     nome_mae = models.CharField(max_length=255)
     nome_pai = models.CharField(max_length=255)
     data_nascimento = models.DateField()

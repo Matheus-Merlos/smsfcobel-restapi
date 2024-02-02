@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from users.managers import UserManager
+from django.db.models import Model
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255, unique=True)
@@ -17,3 +18,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self) -> str:
         return self.name
+

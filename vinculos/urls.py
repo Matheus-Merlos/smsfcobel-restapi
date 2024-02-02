@@ -6,6 +6,8 @@ app_name = 'vinculos'
 
 vinculos_router = SimpleRouter(trailing_slash=True)
 vinculos_router.register('vinculos-pendentes', api.VinculosPendentesViewSet, basename='vinculos-pendentes')
+vinculos_router.register('vinculos-cnes', api.VinculosCNESViewSet, basename='vinculos-pendentes')
+vinculos_router.register('vinculos-all', api.AllVinculosViewSet)
 
 vinculos_router.register('funcionarios', api.FuncionarioViewSet, basename='funcionarios')
 vinculos_router.register('locais-trabalho', api.LocaisTrabalhoList)

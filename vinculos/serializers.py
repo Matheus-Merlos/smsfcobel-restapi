@@ -34,7 +34,7 @@ class FuncionarioSerializer(serializers.ModelSerializer):
     sexo = serializers.StringRelatedField(source='sexo.descricao', read_only=True)
     class Meta:
         model = Funcionario
-        fields = ['id' ,'nome', 'sexo_codigo', 'sexo', 'cpf', 'rg', 'emissao_rg', 'cns', 'email', 'nome_mae', 'nome_pai', 'data_nascimento', 'operador', 'profissional']
+        fields = ['id', 'nome', 'crm', 'sexo_codigo', 'sexo', 'cpf', 'rg', 'emissao_rg', 'cns', 'email', 'nome_mae', 'nome_pai', 'data_nascimento', 'operador', 'profissional']
         
     def validate(self, attrs):
         #validators.FuncionarioValidator(attrs)
@@ -61,7 +61,7 @@ class VinculoSerializer(serializers.ModelSerializer):
     tipo_vinculo_codigo = serializers.PrimaryKeyRelatedField(queryset=TipoVinculo.objects.all(), source='tipo_vinculo', write_only=True, required=True)
     tipo_vinculo = serializers.StringRelatedField(source='tipo_vinculo.descricao', read_only=True)
     
-    status_ids_id = serializers.PrimaryKeyRelatedField(queryset=Status.objects.all(), write_only=True)
+    status_ids_id = serializers.PrimaryKeyRelatedField(queryset=Status.objects.all(), write_only=True, default=1)
 
     
     class Meta:
@@ -86,15 +86,23 @@ class VinculosPendentesSerializer(serializers.ModelSerializer):
     nome_pai = serializers.StringRelatedField(source='funcionario.nome_pai')
     cns = serializers.StringRelatedField(source='funcionario.cns')
     funcao = serializers.StringRelatedField(source='funcao.descricao')
+    sexo = serializers.StringRelatedField(source='funcionario.sexo.descricao')
 
     operador = serializers.StringRelatedField(source='funcionario.operador')
     profissional = serializers.StringRelatedField(source='funcionario.profissional')
     
     data_criacao = serializers.DateField(format='%d/%m/%Y')
     data_entrada = serializers.DateField(format='%d/%m/%Y')
+    data_nascimento = serializers.DateField(format='%d/%m/%Y', source='funcionario.data_nascimento')
     tipo = serializers.DateField(format='%d/%m/%Y', source='tipo.descricao')
+    
+    crm = serializers.StringRelatedField(source='funcionario.crm')
+    
+    status_ids = serializers.StringRelatedField(source='status_ids.descricao')
+    status_cnes = serializers.StringRelatedField(source='status_cnes.descricao')
+    status_rh = serializers.StringRelatedField(source='status_rh.descricao')
     
     class Meta:
         model = Vinculo
-        fields = ['id', 'profissional_id', 'tipo_vinculo', 'nome', 'cpf', 'rg', 'emissao_rg', 'local', 'email', 'nome_mae', 'nome_pai', 'cns', 'funcao', 'operador', 'profissional', 'data_criacao', 'data_entrada', 'tipo']
+        fields = ['id', 'profissional_id', 'tipo_vinculo', 'nome', 'cpf', 'rg', 'emissao_rg', 'local', 'email', 'sexo', 'nome_mae', 'nome_pai', 'cns', 'funcao', 'operador', 'profissional', 'data_criacao', 'data_entrada', 'data_nascimento', 'tipo', 'crm', 'carga_horaria', 'status_ids', 'status_cnes', 'status_rh']
 

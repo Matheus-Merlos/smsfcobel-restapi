@@ -54,7 +54,7 @@ class TipoVinculoAdmin(admin.ModelAdmin):
 @admin.register(models.Funcionario)
 class FuncionarioAdmin(admin.ModelAdmin):
     ordering = ('id',)
-    list_display = ('id', 'nome', 'get_sexo_descricao', 'cpf', 'cns', 'rg', 'emissao_rg', 'email', 'nome_mae', 'nome_pai', 'data_nascimento', 'operador', 'profissional')
+    list_display = ('id', 'nome', 'get_sexo_descricao', 'crm','cpf', 'cns', 'rg', 'emissao_rg', 'email', 'nome_mae', 'nome_pai', 'data_nascimento', 'operador', 'profissional')
     
     def get_sexo_descricao(self, obj):
         return obj.sexo.descricao
