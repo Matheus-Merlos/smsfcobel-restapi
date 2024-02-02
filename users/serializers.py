@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import CustomUser
+from users.models import CustomUser, Permissions
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -23,4 +23,5 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         data['user'] = self.user.name
         data['cpf'] = self.user.cpf
+        data['permissions'] = [permission.descricao for permission in Permissions.objects.all().filter(customuser__cpf=self.user.cpf)]
         return data    
