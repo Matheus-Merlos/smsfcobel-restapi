@@ -62,11 +62,12 @@ class VinculoSerializer(serializers.ModelSerializer):
     tipo_vinculo = serializers.StringRelatedField(source='tipo_vinculo.descricao', read_only=True)
     
     status_ids_id = serializers.PrimaryKeyRelatedField(queryset=Status.objects.all(), write_only=True, default=1)
+    status_cnes_id = serializers.PrimaryKeyRelatedField(queryset=Status.objects.all(), write_only=True, default=1)
 
     
     class Meta:
         model = Vinculo
-        fields = ['id', 'funcionario_codigo', 'funcionario', 'carga_horaria', 'data_entrada', 'data_saida', 'funcao_codigo', 'funcao', 'local_codigo', 'local', 'tipo_codigo', 'tipo', 'tipo_vinculo_codigo', 'tipo_vinculo', 'status_ids_id']
+        fields = ['id', 'funcionario_codigo', 'funcionario', 'carga_horaria', 'data_entrada', 'data_saida', 'funcao_codigo', 'funcao', 'local_codigo', 'local', 'tipo_codigo', 'tipo', 'tipo_vinculo_codigo', 'tipo_vinculo', 'status_ids_id', 'status_cnes_id']
     
     def validate(self, attrs):
         #validators.VinculoValidator(attrs)
